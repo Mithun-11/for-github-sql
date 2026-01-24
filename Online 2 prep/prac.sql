@@ -1,22 +1,8 @@
-SELECT * 
-FROM EMPLOYEES e 
-JOIN JOBS j ON e.JOB_ID=j.JOB_ID
-WHERE j.MIN_SALARY>10000 OR 
-e.DEPARTMENT_ID IN (
-    SELECT EMPLOYEES.DEPARTMENT_ID
-    FROM EMPLOYEES
-    GROUP BY EMPLOYEES.DEPARTMENT_ID
-    HAVING COUNT(*)>5
-)
-
-MINUS 
-SELECT * 
-FROM EMPLOYEES e 
-JOIN JOBS j ON e.JOB_ID=j.JOB_ID
-WHERE j.MIN_SALARY>10000 AND
-e.DEPARTMENT_ID IN (
-    SELECT EMPLOYEES.DEPARTMENT_ID
-    FROM EMPLOYEES
-    GROUP BY EMPLOYEES.DEPARTMENT_ID
-    HAVING COUNT(*)>5
-); 
+select e1.last_name,
+       count(*) highsal
+  from employees e1
+  join employees e2
+on ( e1.salary < e2.salary )
+ group by e1.employee_id,
+          e1.last_name
+ order by e1.last_name asc;
