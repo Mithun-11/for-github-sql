@@ -48,7 +48,7 @@ BEGIN
                     SELECT count(*)
                     from employees_copy e 
                     where e.manager_id=m.EMPLOYEE_ID
-                )-v_old_mgr_count)
+                )-v_old_mgr_count) ASC
             )
             WHERE ROWNUM=1;
 
