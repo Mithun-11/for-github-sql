@@ -11,9 +11,9 @@ increase_amount NUMBER;
 msg VARCHAR2(100);
     PROCEDURE print_details(p_id in NUMBER)
     is 
-    r employees_copy%rowtype;
+    r_emp employees_copy%rowtype;
     BEGIN 
-        SELECT * into r
+        SELECT * into r_emp
         FROM employees_copy
         where employee_id=p_id ;
 
@@ -33,7 +33,7 @@ BEGIN
       FROM EMPLOYEES_COPY
       WHERE MANAGER_ID=m_id_1 AND
       SALARY=(
-        SELECT *
+        SELECT MIN(salary)
         FROM EMPLOYEES_COPY
         WHERE EMPLOYEES_COPY.MANAGER_ID=m_id_1
       ) and ROWNUM=1;
@@ -42,17 +42,17 @@ BEGIN
       FROM EMPLOYEES_COPY
       WHERE MANAGER_ID=m_id_2 AND
       SALARY=(
-        SELECT *
+        SELECT MIN(salary)
         FROM EMPLOYEES_COPY
         WHERE EMPLOYEES_COPY.MANAGER_ID=m_id_2
       ) and ROWNUM=1;
 
       DBMS_OUTPUT.PUT_LINE('Before EXCHANGE_EMPLOYEES( '|| m_id_1||', '|| m_id_2||') :');
-      print_details(emp_rec_1);
-      print_details(emp_rec_2);
+      print_details(emp_rec_1.employee_id);
+      print_details(emp_rec_2.employee_id);
 
 
-        increase_amount := ABS(v_emp1_rec.salary - v_emp2_rec.salary) * 0.5;
+        increase_amount := ABS(emp_rec_1.salary - emp_rec_2.salary) * 0.5;
 
 
       UPDATE EMPLOYEES_COPY
@@ -69,11 +69,18 @@ BEGIN
 
 
       DBMS_OUTPUT.PUT_LINE('After EXCHANGE_EMPLOYEES( '|| m_id_1||', '|| m_id_2||') :');
-      print_details(emp_rec_1);
-      print_details(emp_rec_2);
+      print_details(emp_rec_1.employee_id);
+      print_details(emp_rec_2.employee_id);
 
       RETURN 'success';
 
 END;
 /
 
+DECLARE 
+msg VARCHAR2(100);
+BEGIN 
+    msg:=EXCHANGE_EMPLOYEES(100,145);
+  END;
+
+ROLLBACK;
