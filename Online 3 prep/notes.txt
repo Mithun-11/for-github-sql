@@ -20,3 +20,8 @@ this kind of syntax
 can't add a subquery in the checking block of if statement
 
 check 21 a2 for this 
+
+
+
+always write sysdate first when using MONTHS_BETWEEN function
+v_years_worked := TRUNC(MONTHS_BETWEEN(SYSDATE, emp.hire_date) / 12)
