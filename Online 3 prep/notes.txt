@@ -9,3 +9,14 @@ END IF
 
 
 
+to throw error from trigger and block that update use 
+ if min_sal is NULL THEN
+        raise_application_error(-20000,'Case 1 failed'); this must be 5 digit number
+    end if;
+
+this kind of syntax
+
+
+can't add a subquery in the checking block of if statement
+
+check 21 a2 for this 
