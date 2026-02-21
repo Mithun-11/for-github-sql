@@ -1,0 +1,5 @@
+after inserting data using select .... into v_var
+you can check if v_var is null or not
+IF v_var is null THEN 
+    ....
+END IF 
